@@ -1,0 +1,126 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "lms-adf"
+		},
+		"LMS_web_stud_ls_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'LMS_web_stud_ls'"
+		},
+		"lms_adls_ls_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'lms_adls_ls'"
+		},
+		"lms_git_ls_inc_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'lms_git_ls_inc'"
+		},
+		"lms_sql_ls_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'lms_sql_ls'"
+		},
+		"LMS_web_stud_ls_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://raw.githubusercontent.com/sahankumar222/Library-Management-System/refs/heads/main/Raw-Data/"
+		},
+		"LMS_web_stud_ls_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sahankumar222@gmail.com"
+		},
+		"lms_adls_ls_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://lmsstorageaccount2025.dfs.core.windows.net/"
+		},
+		"lms_git_ls_inc_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://raw.githubusercontent.com/sahankumar222/Library-Management-System/refs/heads/main/Raw-Data/Transaction/"
+		},
+		"lms_git_ls_inc_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sahankumar222@gmail.com"
+		},
+		"lms_sql_ls_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "lms-server-sql.database.windows.net"
+		},
+		"lms_sql_ls_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "lms-database"
+		},
+		"lms_sql_ls_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sqladmin"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "lms-adf_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"LMS_web_stud_ls_password": {
+						"value": "[parameters('LMS_web_stud_ls_password')]"
+					},
+					"lms_adls_ls_accountKey": {
+						"value": "[parameters('lms_adls_ls_accountKey')]"
+					},
+					"lms_git_ls_inc_password": {
+						"value": "[parameters('lms_git_ls_inc_password')]"
+					},
+					"lms_sql_ls_password": {
+						"value": "[parameters('lms_sql_ls_password')]"
+					},
+					"LMS_web_stud_ls_properties_typeProperties_url": {
+						"value": "[parameters('LMS_web_stud_ls_properties_typeProperties_url')]"
+					},
+					"LMS_web_stud_ls_properties_typeProperties_userName": {
+						"value": "[parameters('LMS_web_stud_ls_properties_typeProperties_userName')]"
+					},
+					"lms_adls_ls_properties_typeProperties_url": {
+						"value": "[parameters('lms_adls_ls_properties_typeProperties_url')]"
+					},
+					"lms_git_ls_inc_properties_typeProperties_url": {
+						"value": "[parameters('lms_git_ls_inc_properties_typeProperties_url')]"
+					},
+					"lms_git_ls_inc_properties_typeProperties_userName": {
+						"value": "[parameters('lms_git_ls_inc_properties_typeProperties_userName')]"
+					},
+					"lms_sql_ls_properties_typeProperties_server": {
+						"value": "[parameters('lms_sql_ls_properties_typeProperties_server')]"
+					},
+					"lms_sql_ls_properties_typeProperties_database": {
+						"value": "[parameters('lms_sql_ls_properties_typeProperties_database')]"
+					},
+					"lms_sql_ls_properties_typeProperties_userName": {
+						"value": "[parameters('lms_sql_ls_properties_typeProperties_userName')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
