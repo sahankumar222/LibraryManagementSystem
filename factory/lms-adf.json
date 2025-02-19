@@ -1,0 +1,9 @@
+{
+	"name": "lms-adf",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "d67a9bd2-c115-4caa-ab37-1b9ae84401eb",
+		"tenantId": "9052b30e-2366-4e15-93d5-75b87c1fa42e"
+	}
+}

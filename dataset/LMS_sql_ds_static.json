@@ -1,0 +1,17 @@
+{
+	"name": "LMS_sql_ds_static",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "lms_sql_ls",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "filesSHA"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

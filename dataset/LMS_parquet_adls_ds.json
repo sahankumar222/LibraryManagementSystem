@@ -1,0 +1,49 @@
+{
+	"name": "LMS_parquet_adls_ds",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "lms_adls_ls",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "bronze"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "student_id",
+				"type": "UTF8"
+			},
+			{
+				"name": "first_name",
+				"type": "UTF8"
+			},
+			{
+				"name": "last_name",
+				"type": "UTF8"
+			},
+			{
+				"name": "department",
+				"type": "UTF8"
+			},
+			{
+				"name": "student_year",
+				"type": "UTF8"
+			},
+			{
+				"name": "section",
+				"type": "UTF8"
+			},
+			{
+				"name": "email",
+				"type": "UTF8"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,289 @@
+{
+	"name": "LmsStaticFileLoad",
+	"properties": {
+		"activities": [
+			{
+				"name": "Iterate initial load table",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Initial_load_table",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Initial_load_table').output.value",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Git_commit_history",
+							"type": "WebActivity",
+							"dependsOn": [
+								{
+									"activity": "GetGithubToken",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"method": "GET",
+								"headers": {
+									"Authorization": {
+										"value": "Bearer @{activity('GetGithubToken').output.value}",
+										"type": "Expression"
+									},
+									"Accept": "application/vnd.github.v3+json",
+									"User-Agent": "Azure-Data-Factory"
+								},
+								"url": {
+									"value": "@concat(\n    'https://api.github.com/repos/sahankumar222/Library-management-system/contents/Raw-Data/',\n    item().fileName,'/',item().fileName,'.csv'\n)",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "GitFileSHA",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Git_commit_history",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "gitfile_sha",
+								"value": {
+									"value": "@activity('Git_commit_history').output.sha",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "If initial load SHA is equal to the current SHA",
+							"type": "IfCondition",
+							"dependsOn": [
+								{
+									"activity": "GitFileSHA",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"expression": {
+									"value": "@not(equals(item().SHA, activity('Git_commit_history').output.sha))",
+									"type": "Expression"
+								},
+								"ifFalseActivities": [
+									{
+										"name": "EmailNotification",
+										"type": "WebActivity",
+										"dependsOn": [],
+										"policy": {
+											"timeout": "0.12:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"method": "POST",
+											"url": "https://prod-31.centralindia.logic.azure.com:443/workflows/df25154ade1a4f2f82387157c51293fa/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=dCF3iOXM4Qe4Ok5cpHCe0py-D1CSvhaTraup5LYU01o",
+											"body": {
+												"value": "{\n  \"subject\": \"File Already Exists\",\n  \"body\": \"In the pipeline LmsStaticFileLoad, the file @{item().fileName}.csv already exists in ADLS. Copy activity was skipped.\"\n}",
+												"type": "Expression"
+											}
+										}
+									}
+								],
+								"ifTrueActivities": [
+									{
+										"name": "File Git  - ADLS",
+										"type": "Copy",
+										"dependsOn": [],
+										"policy": {
+											"timeout": "0.12:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"source": {
+												"type": "DelimitedTextSource",
+												"storeSettings": {
+													"type": "HttpReadSettings",
+													"requestMethod": "GET"
+												},
+												"formatSettings": {
+													"type": "DelimitedTextReadSettings"
+												}
+											},
+											"sink": {
+												"type": "ParquetSink",
+												"storeSettings": {
+													"type": "AzureBlobFSWriteSettings"
+												},
+												"formatSettings": {
+													"type": "ParquetWriteSettings"
+												}
+											},
+											"enableStaging": false,
+											"translator": {
+												"type": "TabularTranslator",
+												"typeConversion": true,
+												"typeConversionSettings": {
+													"allowDataTruncation": true,
+													"treatBooleanAsNumber": false
+												}
+											}
+										},
+										"inputs": [
+											{
+												"referenceName": "LMS_web_stud_ds",
+												"type": "DatasetReference",
+												"parameters": {
+													"file_names": {
+														"value": "@item().fileName",
+														"type": "Expression"
+													}
+												}
+											}
+										],
+										"outputs": [
+											{
+												"referenceName": "LMS_parquet_adls_ds",
+												"type": "DatasetReference"
+											}
+										]
+									},
+									{
+										"name": "UpdateFileSHA",
+										"type": "SqlServerStoredProcedure",
+										"dependsOn": [
+											{
+												"activity": "File Git  - ADLS",
+												"dependencyConditions": [
+													"Succeeded"
+												]
+											}
+										],
+										"policy": {
+											"timeout": "0.12:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"storedProcedureName": "[dbo].[UpdateFileSHA]",
+											"storedProcedureParameters": {
+												"fileName": {
+													"value": {
+														"value": "@item().fileName",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"newSHA": {
+													"value": {
+														"value": "@activity('Git_commit_history').output.SHA",
+														"type": "Expression"
+													},
+													"type": "String"
+												}
+											}
+										},
+										"linkedServiceName": {
+											"referenceName": "lms_sql_ls",
+											"type": "LinkedServiceReference"
+										}
+									}
+								]
+							}
+						},
+						{
+							"name": "GetGithubToken",
+							"type": "WebActivity",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"method": "GET",
+								"url": "https://lms-keyvault-1.vault.azure.net/secrets/Githubaccesstoken?api-version=7.3",
+								"authentication": {
+									"type": "MSI",
+									"resource": "https://vault.azure.net"
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "Initial_load_table",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "LMS_sql_ds_static",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			}
+		],
+		"variables": {
+			"gitfile_sha": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2025-02-19T05:22:24Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

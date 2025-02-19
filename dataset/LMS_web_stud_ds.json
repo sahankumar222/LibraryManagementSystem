@@ -1,0 +1,31 @@
+{
+	"name": "LMS_web_stud_ds",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LMS_web_stud_ls",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"file_names": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": {
+					"value": "@concat(dataset().file_names,'/',dataset().file_names,'.csv')",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
