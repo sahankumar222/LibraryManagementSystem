@@ -7,25 +7,13 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "lms-adf"
 		},
-		"LMS_web_stud_ls_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'LMS_web_stud_ls'"
-		},
-		"lms_adls_ls_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'lms_adls_ls'"
-		},
-		"lms_git_ls_inc_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'lms_git_ls_inc'"
-		},
-		"lms_sql_ls_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'lms_sql_ls'"
+		"KeyVault_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://lms-keyvault-1.vault.azure.net/"
 		},
 		"LMS_web_stud_ls_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://raw.githubusercontent.com/sahankumar222/Library-Management-System/refs/heads/main/Raw-Data/"
+			"defaultValue": "https://raw.githubusercontent.com/sahankumar222/LibraryManagementSystem/refs/heads/main/Raw-Data/"
 		},
 		"LMS_web_stud_ls_properties_typeProperties_userName": {
 			"type": "string",
@@ -37,7 +25,7 @@
 		},
 		"lms_git_ls_inc_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://raw.githubusercontent.com/sahankumar222/Library-Management-System/refs/heads/main/Raw-Data/Transaction/"
+			"defaultValue": "https://raw.githubusercontent.com/sahankumar222/LibraryManagementSystem/refs/heads/main/Raw-Data/Transaction/"
 		},
 		"lms_git_ls_inc_properties_typeProperties_userName": {
 			"type": "string",
@@ -61,6 +49,19 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/KeyVault')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('KeyVault_properties_typeProperties_baseUrl')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/LMS_web_stud_ls')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -73,12 +74,18 @@
 					"authenticationType": "Basic",
 					"userName": "[parameters('LMS_web_stud_ls_properties_typeProperties_userName')]",
 					"password": {
-						"type": "SecureString",
-						"value": "[parameters('LMS_web_stud_ls_password')]"
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "KeyVault",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "kvgithub"
 					}
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/KeyVault')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/lms_adls_ls')]",
@@ -90,12 +97,18 @@
 				"typeProperties": {
 					"url": "[parameters('lms_adls_ls_properties_typeProperties_url')]",
 					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('lms_adls_ls_accountKey')]"
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "KeyVault",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "lms-accesskeys"
 					}
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/KeyVault')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/lms_git_ls_inc')]",
@@ -110,12 +123,18 @@
 					"authenticationType": "Basic",
 					"userName": "[parameters('lms_git_ls_inc_properties_typeProperties_userName')]",
 					"password": {
-						"type": "SecureString",
-						"value": "[parameters('lms_git_ls_inc_password')]"
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "KeyVault",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "kvgithub"
 					}
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/KeyVault')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/lms_sql_ls')]",
@@ -132,12 +151,18 @@
 					"authenticationType": "SQL",
 					"userName": "[parameters('lms_sql_ls_properties_typeProperties_userName')]",
 					"password": {
-						"type": "SecureString",
-						"value": "[parameters('lms_sql_ls_password')]"
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "KeyVault",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "kvsql"
 					}
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/KeyVault')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/LMS_parquet_adls_ds')]",
@@ -795,7 +820,7 @@
 											"User-Agent": "Azure-Data-Factory"
 										},
 										"url": {
-											"value": "@concat(\n    'https://api.github.com/repos/sahankumar222/Library-management-system/contents/Raw-Data/',\n    item().fileName,'/',item().fileName,'.csv'\n)",
+											"value": "@concat(\n    'https://api.github.com/repos/sahankumar222/LibraryManagementSystem/contents/Raw-Data/',\n    item().fileName,'/',item().fileName,'.csv'\n)",
 											"type": "Expression"
 										}
 									}

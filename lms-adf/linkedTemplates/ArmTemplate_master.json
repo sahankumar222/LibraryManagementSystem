@@ -7,25 +7,13 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "lms-adf"
 		},
-		"LMS_web_stud_ls_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'LMS_web_stud_ls'"
-		},
-		"lms_adls_ls_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'lms_adls_ls'"
-		},
-		"lms_git_ls_inc_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'lms_git_ls_inc'"
-		},
-		"lms_sql_ls_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'lms_sql_ls'"
+		"KeyVault_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://lms-keyvault-1.vault.azure.net/"
 		},
 		"LMS_web_stud_ls_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://raw.githubusercontent.com/sahankumar222/Library-Management-System/refs/heads/main/Raw-Data/"
+			"defaultValue": "https://raw.githubusercontent.com/sahankumar222/LibraryManagementSystem/refs/heads/main/Raw-Data/"
 		},
 		"LMS_web_stud_ls_properties_typeProperties_userName": {
 			"type": "string",
@@ -37,7 +25,7 @@
 		},
 		"lms_git_ls_inc_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://raw.githubusercontent.com/sahankumar222/Library-Management-System/refs/heads/main/Raw-Data/Transaction/"
+			"defaultValue": "https://raw.githubusercontent.com/sahankumar222/LibraryManagementSystem/refs/heads/main/Raw-Data/Transaction/"
 		},
 		"lms_git_ls_inc_properties_typeProperties_userName": {
 			"type": "string",
@@ -82,17 +70,8 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"LMS_web_stud_ls_password": {
-						"value": "[parameters('LMS_web_stud_ls_password')]"
-					},
-					"lms_adls_ls_accountKey": {
-						"value": "[parameters('lms_adls_ls_accountKey')]"
-					},
-					"lms_git_ls_inc_password": {
-						"value": "[parameters('lms_git_ls_inc_password')]"
-					},
-					"lms_sql_ls_password": {
-						"value": "[parameters('lms_sql_ls_password')]"
+					"KeyVault_properties_typeProperties_baseUrl": {
+						"value": "[parameters('KeyVault_properties_typeProperties_baseUrl')]"
 					},
 					"LMS_web_stud_ls_properties_typeProperties_url": {
 						"value": "[parameters('LMS_web_stud_ls_properties_typeProperties_url')]"

@@ -5,20 +5,11 @@
 		"factoryName": {
 			"value": "lms-adf"
 		},
-		"LMS_web_stud_ls_password": {
-			"value": ""
-		},
-		"lms_adls_ls_accountKey": {
-			"value": ""
-		},
-		"lms_git_ls_inc_password": {
-			"value": ""
-		},
-		"lms_sql_ls_password": {
-			"value": ""
+		"KeyVault_properties_typeProperties_baseUrl": {
+			"value": "https://lms-keyvault-1.vault.azure.net/"
 		},
 		"LMS_web_stud_ls_properties_typeProperties_url": {
-			"value": "https://raw.githubusercontent.com/sahankumar222/Library-Management-System/refs/heads/main/Raw-Data/"
+			"value": "https://raw.githubusercontent.com/sahankumar222/LibraryManagementSystem/refs/heads/main/Raw-Data/"
 		},
 		"LMS_web_stud_ls_properties_typeProperties_userName": {
 			"value": "sahankumar222@gmail.com"
@@ -27,7 +18,7 @@
 			"value": "https://lmsstorageaccount2025.dfs.core.windows.net/"
 		},
 		"lms_git_ls_inc_properties_typeProperties_url": {
-			"value": "https://raw.githubusercontent.com/sahankumar222/Library-Management-System/refs/heads/main/Raw-Data/Transaction/"
+			"value": "https://raw.githubusercontent.com/sahankumar222/LibraryManagementSystem/refs/heads/main/Raw-Data/Transaction/"
 		},
 		"lms_git_ls_inc_properties_typeProperties_userName": {
 			"value": "sahankumar222@gmail.com"
