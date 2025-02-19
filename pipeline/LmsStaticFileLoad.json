@@ -50,7 +50,7 @@
 									"User-Agent": "Azure-Data-Factory"
 								},
 								"url": {
-									"value": "@concat(\n    'https://api.github.com/repos/sahankumar222/Library-management-system/contents/Raw-Data/',\n    item().fileName,'/',item().fileName,'.csv'\n)",
+									"value": "@concat(\n    'https://api.github.com/repos/sahankumar222/LibraryManagementSystem/contents/Raw-Data/',\n    item().fileName,'/',item().fileName,'.csv'\n)",
 									"type": "Expression"
 								}
 							}
