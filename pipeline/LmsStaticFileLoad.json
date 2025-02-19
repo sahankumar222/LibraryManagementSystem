@@ -23,6 +23,8 @@
 						{
 							"name": "Git_commit_history",
 							"type": "WebActivity",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [],
 							"policy": {
 								"timeout": "0.12:00:00",
@@ -48,6 +50,8 @@
 						{
 							"name": "GitFileSHA",
 							"type": "SetVariable",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "Git_commit_history",
@@ -72,6 +76,8 @@
 						{
 							"name": "If initial load SHA is equal to the current SHA",
 							"type": "IfCondition",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "GitFileSHA",
@@ -215,6 +221,27 @@
 										}
 									}
 								]
+							}
+						},
+						{
+							"name": "GetGithubToken",
+							"type": "WebActivity",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"method": "GET",
+								"url": "https://lms-keyvault-1.vault.azure.net/secrets/Githubaccesstoken?api-version=7.3",
+								"authentication": {
+									"type": "MSI",
+									"resource": "https://vault.azure.net"
+								}
 							}
 						}
 					]
