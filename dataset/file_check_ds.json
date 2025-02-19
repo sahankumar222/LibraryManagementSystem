@@ -1,0 +1,87 @@
+{
+	"name": "file_check_ds",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "lms_adls_ls",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"qurterValue": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@concat('transactions_',dataset().qurterValue,'.parquet')",
+					"type": "Expression"
+				},
+				"folderPath": "transactions",
+				"fileSystem": "bronze"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "transaction_id",
+				"type": "UTF8"
+			},
+			{
+				"name": "student_id",
+				"type": "UTF8"
+			},
+			{
+				"name": "issue_date",
+				"type": "UTF8"
+			},
+			{
+				"name": "due_date",
+				"type": "UTF8"
+			},
+			{
+				"name": "return_date",
+				"type": "UTF8"
+			},
+			{
+				"name": "book_id",
+				"type": "UTF8"
+			},
+			{
+				"name": "copy_id",
+				"type": "UTF8"
+			},
+			{
+				"name": "fine_amount",
+				"type": "UTF8"
+			},
+			{
+				"name": "initial_status",
+				"type": "UTF8"
+			},
+			{
+				"name": "final_status",
+				"type": "UTF8"
+			},
+			{
+				"name": "payment_status",
+				"type": "UTF8"
+			},
+			{
+				"name": "payment_date",
+				"type": "UTF8"
+			},
+			{
+				"name": "year",
+				"type": "UTF8"
+			},
+			{
+				"name": "quarter",
+				"type": "UTF8"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

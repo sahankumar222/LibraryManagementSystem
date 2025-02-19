@@ -1,0 +1,15 @@
+{
+	"name": "LMS_web_stud_ls",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "HttpServer",
+		"typeProperties": {
+			"url": "https://raw.githubusercontent.com/sahankumar222/Library-Management-System/refs/heads/main/Raw-Data/",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Basic",
+			"userName": "sahankumar222@gmail.com",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDAwQzk2NUI2LTRDNzgtNDYxQy1CRTE0LTE5NUUyNjNFQjQ4OF84N2Q4YjVlZS0xYjVkLTRkZDMtYjcxOS03Y2QzYTIyNjJjNTYiDQp9"
+		}
+	}
+}
