@@ -23,9 +23,14 @@
 						{
 							"name": "Git_commit_history",
 							"type": "WebActivity",
-							"state": "Inactive",
-							"onInactiveMarkAs": "Succeeded",
-							"dependsOn": [],
+							"dependsOn": [
+								{
+									"activity": "GetGithubToken",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
 							"policy": {
 								"timeout": "0.12:00:00",
 								"retry": 0,
@@ -37,7 +42,10 @@
 							"typeProperties": {
 								"method": "GET",
 								"headers": {
-									"Authorization": "Bearer ",
+									"Authorization": {
+										"value": "Bearer @{activity('GetGithubToken').output.value}",
+										"type": "Expression"
+									},
 									"Accept": "application/vnd.github.v3+json",
 									"User-Agent": "Azure-Data-Factory"
 								},
@@ -50,8 +58,6 @@
 						{
 							"name": "GitFileSHA",
 							"type": "SetVariable",
-							"state": "Inactive",
-							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "Git_commit_history",
@@ -76,8 +82,6 @@
 						{
 							"name": "If initial load SHA is equal to the current SHA",
 							"type": "IfCondition",
-							"state": "Inactive",
-							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "GitFileSHA",
