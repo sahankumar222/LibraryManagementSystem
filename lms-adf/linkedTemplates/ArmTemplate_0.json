@@ -102,7 +102,7 @@
 							"referenceName": "KeyVault",
 							"type": "LinkedServiceReference"
 						},
-						"secretName": "lms-accesskeys"
+						"secretName": "lms-accountkeys"
 					}
 				}
 			},
