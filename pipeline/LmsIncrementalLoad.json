@@ -213,6 +213,33 @@
 								"referenceName": "lms_sql_ls",
 								"type": "LinkedServiceReference"
 							}
+						},
+						{
+							"name": "SilverNotebook",
+							"type": "DatabricksNotebook",
+							"dependsOn": [
+								{
+									"activity": "Update_load",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"notebookPath": "/LMS - Silver/practice_LMS/pfsliver/Silver"
+							},
+							"linkedServiceName": {
+								"referenceName": "DatabricksDS",
+								"type": "LinkedServiceReference"
+							}
 						}
 					],
 					"ifTrueActivities": [
