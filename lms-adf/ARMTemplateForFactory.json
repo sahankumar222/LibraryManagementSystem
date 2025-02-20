@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "lms-adf"
 		},
+		"DatabricksDS_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0214-055010-h9u2k0j4"
+		},
 		"KeyVault_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://lms-keyvault-1.vault.azure.net/"
@@ -266,6 +270,33 @@
 										"referenceName": "lms_sql_ls",
 										"type": "LinkedServiceReference"
 									}
+								},
+								{
+									"name": "SilverNotebook",
+									"type": "DatabricksNotebook",
+									"dependsOn": [
+										{
+											"activity": "Update_load",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"notebookPath": "/LMS - Silver/practice_LMS/pfsliver/Silver"
+									},
+									"linkedServiceName": {
+										"referenceName": "DatabricksDS",
+										"type": "LinkedServiceReference"
+									}
 								}
 							],
 							"ifTrueActivities": [
@@ -319,7 +350,8 @@
 				"[concat(variables('factoryId'), '/datasets/file_check_ds')]",
 				"[concat(variables('factoryId'), '/datasets/lms_git_ds')]",
 				"[concat(variables('factoryId'), '/datasets/lms_adls_parquet_ds')]",
-				"[concat(variables('factoryId'), '/linkedServices/lms_sql_ls')]"
+				"[concat(variables('factoryId'), '/linkedServices/lms_sql_ls')]",
+				"[concat(variables('factoryId'), '/linkedServices/DatabricksDS')]"
 			]
 		},
 		{
@@ -951,6 +983,30 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/lms_sql_ls')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DatabricksDS')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-2613749705707804.4.azuredatabricks.net",
+					"accessToken": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "KeyVault",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "DataBricksaccessToken"
+					},
+					"existingClusterId": "[parameters('DatabricksDS_properties_typeProperties_existingClusterId')]"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/KeyVault')]"
 			]
 		},
 		{

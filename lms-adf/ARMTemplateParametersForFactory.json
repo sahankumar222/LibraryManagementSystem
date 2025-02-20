@@ -5,6 +5,9 @@
 		"factoryName": {
 			"value": "lms-adf"
 		},
+		"DatabricksDS_properties_typeProperties_existingClusterId": {
+			"value": "0214-055010-h9u2k0j4"
+		},
 		"KeyVault_properties_typeProperties_baseUrl": {
 			"value": "https://lms-keyvault-1.vault.azure.net/"
 		},
