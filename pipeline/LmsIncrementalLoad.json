@@ -240,6 +240,33 @@
 								"referenceName": "DatabricksDS",
 								"type": "LinkedServiceReference"
 							}
+						},
+						{
+							"name": "GoldNotebook",
+							"type": "DatabricksNotebook",
+							"dependsOn": [
+								{
+									"activity": "SilverNotebook",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"notebookPath": "/LMS - Gold/LibraryManagementSystem/Gold/(Clone) gold"
+							},
+							"linkedServiceName": {
+								"referenceName": "DatabricksDS",
+								"type": "LinkedServiceReference"
+							}
 						}
 					],
 					"ifTrueActivities": [
