@@ -234,7 +234,7 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"notebookPath": "/LMS - Silver/practice_LMS/pfsliver/Silver"
+								"notebookPath": "/LMS - Silver/LibraryManagementSystem/Silver/(Clone) Silver"
 							},
 							"linkedServiceName": {
 								"referenceName": "DatabricksDS",
