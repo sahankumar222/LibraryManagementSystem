@@ -241,7 +241,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"method": "GET",
-								"url": "https://lms-keyvault-1.vault.azure.net/secrets/Githubaccesstoken?api-version=7.3",
+								"url": "https://keyvault-lms.vault.azure.net/secrets/GitaccessToken?api-version=7.3",
 								"authentication": {
 									"type": "MSI",
 									"resource": "https://vault.azure.net"

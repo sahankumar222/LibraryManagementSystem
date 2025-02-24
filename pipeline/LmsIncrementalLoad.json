@@ -217,6 +217,8 @@
 						{
 							"name": "SilverNotebook",
 							"type": "DatabricksNotebook",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "Update_load",
@@ -244,6 +246,8 @@
 						{
 							"name": "GoldNotebook",
 							"type": "DatabricksNotebook",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "SilverNotebook",
