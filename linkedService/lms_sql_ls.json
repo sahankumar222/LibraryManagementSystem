@@ -1,24 +1,17 @@
 {
 	"name": "lms_sql_ls",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"annotations": [],
 		"type": "AzureSqlDatabase",
 		"typeProperties": {
-			"server": "lms-server-sql.database.windows.net",
-			"database": "lms-database",
+			"server": "lmssqlserver24.database.windows.net",
+			"database": "LmsDatabase",
 			"encrypt": "mandatory",
 			"trustServerCertificate": true,
 			"authenticationType": "SQL",
 			"userName": "sqladmin",
-			"password": {
-				"type": "AzureKeyVaultSecret",
-				"store": {
-					"referenceName": "KeyVault",
-					"type": "LinkedServiceReference"
-				},
-				"secretName": "kvsql"
-			}
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDI4QThBOUM2LTk3M0YtNDNFQy1BQTJGLTFENzIyNzE1MDcwN19lMDdkNjUyNy02MTg2LTQxNmUtYjg2NS04ZTNjOWU5ZDc2M2YiDQp9"
 		}
-	},
-	"type": "Microsoft.DataFactory/factories/linkedservices"
+	}
 }
