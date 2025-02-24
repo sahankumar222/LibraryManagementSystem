@@ -1,9 +1,9 @@
 {
 	"name": "lms-adf",
-	"location": "centralindia",
+	"location": "eastus2",
 	"identity": {
 		"type": "SystemAssigned",
-		"principalId": "d67a9bd2-c115-4caa-ab37-1b9ae84401eb",
-		"tenantId": "9052b30e-2366-4e15-93d5-75b87c1fa42e"
+		"principalId": "dd12c5ac-9cfc-4053-b1c9-14155dcbbee8",
+		"tenantId": "8ebed1ec-8e6e-4e89-b8e3-d08b6c9c0800"
 	}
 }
