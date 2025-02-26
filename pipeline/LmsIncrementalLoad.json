@@ -217,8 +217,6 @@
 						{
 							"name": "SilverNotebook",
 							"type": "DatabricksNotebook",
-							"state": "Inactive",
-							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "Update_load",
@@ -236,7 +234,13 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"notebookPath": "/LMS - Silver/LibraryManagementSystem/Silver/(Clone) Silver"
+								"notebookPath": "/Users/samadkhan891932@gmail.com/LibraryManagementSystem/Silver/Silver",
+								"baseParameters": {
+									"fileQuarter": {
+										"value": "@variables('increment_load_value')",
+										"type": "Expression"
+									}
+								}
 							},
 							"linkedServiceName": {
 								"referenceName": "DatabricksDS",
@@ -246,8 +250,6 @@
 						{
 							"name": "GoldNotebook",
 							"type": "DatabricksNotebook",
-							"state": "Inactive",
-							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "SilverNotebook",
@@ -265,7 +267,7 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"notebookPath": "/LMS - Gold/LibraryManagementSystem/Gold/(Clone) gold"
+								"notebookPath": "/Users/samadkhan891932@gmail.com/LibraryManagementSystem/Gold/gold_transformations"
 							},
 							"linkedServiceName": {
 								"referenceName": "DatabricksDS",
