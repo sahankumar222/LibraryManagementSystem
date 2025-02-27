@@ -4,14 +4,14 @@
 		"annotations": [],
 		"type": "AzureBlobFS",
 		"typeProperties": {
-			"url": "https://lmsstorageaccount24.dfs.core.windows.net/",
+			"url": "https://lmsstorageaccount2025.dfs.core.windows.net/",
 			"accountKey": {
 				"type": "AzureKeyVaultSecret",
 				"store": {
 					"referenceName": "KeyVault",
 					"type": "LinkedServiceReference"
 				},
-				"secretName": "StorageKV"
+				"secretName": "lms-accesskeys"
 			}
 		}
 	},

@@ -4,7 +4,7 @@
 		"annotations": [],
 		"type": "AzureKeyVault",
 		"typeProperties": {
-			"baseUrl": "https://keyvault-lms.vault.azure.net/"
+			"baseUrl": "https://lms-keyvault-1.vault.azure.net/"
 		}
 	}
 }

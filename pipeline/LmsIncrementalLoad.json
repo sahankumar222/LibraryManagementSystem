@@ -213,66 +213,6 @@
 								"referenceName": "lms_sql_ls",
 								"type": "LinkedServiceReference"
 							}
-						},
-						{
-							"name": "SilverNotebook",
-							"type": "DatabricksNotebook",
-							"dependsOn": [
-								{
-									"activity": "Update_load",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
-							"policy": {
-								"timeout": "0.12:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"notebookPath": "/Users/samadkhan891932@gmail.com/LibraryManagementSystem/Silver/Silver",
-								"baseParameters": {
-									"fileQuarter": {
-										"value": "@variables('increment_load_value')",
-										"type": "Expression"
-									}
-								}
-							},
-							"linkedServiceName": {
-								"referenceName": "DatabricksDS",
-								"type": "LinkedServiceReference"
-							}
-						},
-						{
-							"name": "GoldNotebook",
-							"type": "DatabricksNotebook",
-							"dependsOn": [
-								{
-									"activity": "SilverNotebook",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
-							"policy": {
-								"timeout": "0.12:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"notebookPath": "/Users/samadkhan891932@gmail.com/LibraryManagementSystem/Gold/gold_transformations"
-							},
-							"linkedServiceName": {
-								"referenceName": "DatabricksDS",
-								"type": "LinkedServiceReference"
-							}
 						}
 					],
 					"ifTrueActivities": [
@@ -293,7 +233,7 @@
 								"headers": {
 									"Content-Type": "application/json"
 								},
-								"url": "https://prod-57.eastus2.logic.azure.com:443/workflows/a8ff8ee754d946f7a5bef41ce556a7b5/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=j6YxwLa1cDbtgGBEwxdlAD09egditiomxo5dMHl3f1M",
+								"url": "https://prod-31.centralindia.logic.azure.com:443/workflows/df25154ade1a4f2f82387157c51293fa/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=dCF3iOXM4Qe4Ok5cpHCe0py-D1CSvhaTraup5LYU01o",
 								"body": {
 									"value": "{\n  \"subject\": \"File Already Exists\",\n  \"body\": \"The file transactions_@{variables('increment_load_value')}.csv already exists in ADLS. No new copy was performed.\"\n}\n\n\n\n\n\n\n\n\n\n",
 									"type": "Expression"
