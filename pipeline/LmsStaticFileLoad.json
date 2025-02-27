@@ -111,7 +111,7 @@
 										"userProperties": [],
 										"typeProperties": {
 											"method": "POST",
-											"url": "https://prod-31.centralindia.logic.azure.com:443/workflows/df25154ade1a4f2f82387157c51293fa/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=dCF3iOXM4Qe4Ok5cpHCe0py-D1CSvhaTraup5LYU01o",
+											"url": "https://prod-57.eastus2.logic.azure.com:443/workflows/a8ff8ee754d946f7a5bef41ce556a7b5/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=j6YxwLa1cDbtgGBEwxdlAD09egditiomxo5dMHl3f1M",
 											"body": {
 												"value": "{\n  \"subject\": \"File Already Exists\",\n  \"body\": \"In the pipeline LmsStaticFileLoad, the file @{item().fileName}.csv already exists in ADLS. Copy activity was skipped.\"\n}",
 												"type": "Expression"
@@ -241,7 +241,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"method": "GET",
-								"url": "https://lms-keyvault-1.vault.azure.net/secrets/Githubaccesstoken?api-version=7.3",
+								"url": "https://keyvault-lms.vault.azure.net/secrets/GitaccessToken?api-version=7.3",
 								"authentication": {
 									"type": "MSI",
 									"resource": "https://vault.azure.net"
